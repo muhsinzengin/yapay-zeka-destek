@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Canlı Sohbet</title>
+    <link rel="stylesheet" href="admin-style.css">
+</head>
+<body>
+    <div class="admin-container">
+        <nav class="sidebar">
+            <div class="logo">
+                <span class="icon">🧠</span>
+                <h2>Admin Panel</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="dashboard.html">📊 Dashboard</a></li>
+                <li><a href="egitim.html">📚 Eğitim</a></li>
+                <li><a href="canli.html" class="active">💬 Canlı Sohbet</a></li>
+                <li><a href="ayarlar.html">⚙️ Ayarlar</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <header class="page-header">
+                <h1>Canlı Sohbet Takibi</h1>
+                <div class="live-indicator">
+                    <span class="pulse"></span>
+                    <span>Canlı</span>
+                </div>
+            </header>
+
+            <div class="live-chat-container">
+                <!-- Active Conversations List -->
+                <div class="conversations-panel">
+                    <h2>Aktif Konuşmalar</h2>
+                    <div class="conversation-list" id="conversationList">
+                        <!-- Conversations will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Selected Conversation Detail -->
+                <div class="conversation-detail">
+                    <div class="no-selection" id="noSelection">
+                        Bir konuşma seçin
+                    </div>
+
+                    <div class="conversation-content" id="conversationContent" style="display: none;">
+                        <div class="conversation-header">
+                            <div class="user-info">
+                                <h3 id="selectedUserId">-</h3>
+                                <span class="status-badge active">🟢 Aktif</span>
+                            </div>
+                            <button class="btn-secondary" id="refreshBtn">🔄 Yenile</button>
+                        </div>
+
+                        <div class="messages-container" id="messagesContainer">
+                            <!-- Messages will be loaded here -->
+                        </div>
+
+                        <!-- Admin Intervention Panel -->
+                        <div class="intervention-panel">
+                            <h3>Müdahale Alanı</h3>
+                            <div class="intervention-warning">
+                                ⚠️ Siz yazdığınızda bot otomatik olarak durur
+                            </div>
+                            <textarea 
+                                id="interventionInput" 
+                                placeholder="Müşteriye mesaj yazın..."
+                                rows="3"
+                            ></textarea>
+                            <button class="btn-primary" id="sendInterventionBtn">
+                                📤 Gönder
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="canli.js"></script>
+</body>
+</html>

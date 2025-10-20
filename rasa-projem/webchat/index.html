@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yapay Zeka Destek - Chat</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Chat Widget - Right Side Half Screen -->
+    <div class="chat-widget" id="chatWidget">
+        <div class="chat-header">
+            <div class="header-icons">
+                <span class="icon">🤖</span>
+                <span class="title">Yapay Zeka Destek</span>
+            </div>
+            <button class="minimize-btn" id="minimizeBtn">−</button>
+        </div>
+        
+        <div class="chat-messages" id="chatMessages">
+            <div class="message bot-message">
+                <div class="message-content">
+                    Merhaba! Size nasıl yardımcı olabilirim?
+                </div>
+            </div>
+        </div>
+        
+        <div class="chat-input-container">
+            <input 
+                type="text" 
+                id="messageInput" 
+                class="chat-input" 
+                placeholder="Mesajınızı yazın..."
+                autocomplete="off"
+            />
+            <button class="send-btn" id="sendBtn">➤</button>
+        </div>
+    </div>
+
+    <!-- Chat Toggle Button (when minimized) -->
+    <button class="chat-toggle" id="chatToggle">
+        💬
+    </button>
+
+    <script src="chat.js"></script>
+</body>
+</html>

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Sayfası - Sistem Sağlığı</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f7fb;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        h1 {
+            text-align: center;
+            color: #1e293b;
+            margin-bottom: 30px;
+        }
+
+        .health-status {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .status-item {
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .status-item.healthy {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-item.unhealthy {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .status-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .status-label {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .status-detail {
+            font-size: 12px;
+        }
+
+        .test-section {
+            margin-top: 40px;
+        }
+
+        .test-section h2 {
+            margin-bottom: 20px;
+            color: #1e293b;
+        }
+
+        .test-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-bottom: 15px;
+            outline: none;
+        }
+
+        .test-input:focus {
+            border-color: #3730a3;
+        }
+
+        .test-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .test-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .test-result {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .test-result.success {
+            background: #d1fae5;
+            color: #065f46;
+            display: block;
+        }
+
+        .test-result.error {
+            background: #fee2e2;
+            color: #991b1b;
+            display: block;
+        }
+
+        .response-box {
+            margin-top: 10px;
+            padding: 15px;
+            background: white;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .metrics {
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔬 Sistem Test ve Sağlık Kontrolü</h1>
+
+        <div class="health-status">
+            <div class="status-item" id="rasaStatus">
+                <div class="status-icon">⏳</div>
+                <div class="status-label">Rasa Sunucusu</div>
+                <div class="status-detail">Kontrol ediliyor...</div>
+            </div>
+
+            <div class="status-item" id="mongoStatus">
+                <div class="status-icon">⏳</div>
+                <div class="status-label">MongoDB</div>
+                <div class="status-detail">Kontrol ediliyor...</div>
+            </div>
+
+            <div class="status-item" id="actionStatus">
+                <div class="status-icon">⏳</div>
+                <div class="status-label">Action Sunucusu</div>
+                <div class="status-detail">Kontrol ediliyor...</div>
+            </div>
+
+            <div class="status-item" id="telegramStatus">
+                <div class="status-icon">⏳</div>
+                <div class="status-label">Telegram Bot</div>
+                <div class="status-detail">Kontrol ediliyor...</div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>Cümle Testi</h2>
+            <input 
+                type="text" 
+                id="testInput" 
+                class="test-input" 
+                placeholder="Test etmek istediğiniz cümleyi yazın..."
+            />
+            <button class="test-btn" id="testBtn">Test Et</button>
+
+            <div class="test-result" id="testResult">
+                <div><strong>Yanıt:</strong></div>
+                <div class="response-box" id="responseBox"></div>
+                <div class="metrics">
+                    <div>⏱️ Süre: <span id="responseTime">-</span>ms</div>
+                    <div>📊 Güven: <span id="confidence">-</span>%</div>
+                    <div>🎯 Intent: <span id="intent">-</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class SystemTester {
+            constructor() {
+                this.rasaUrl = 'http://localhost:5005';
+                this.apiUrl = 'http://localhost:5000/api';
+                
+                this.checkHealth();
+                this.attachEventListeners();
+            }
+
+            attachEventListeners() {
+                document.getElementById('testBtn').addEventListener('click', () => this.testSentence());
+                document.getElementById('testInput').addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') this.testSentence();
+                });
+            }
+
+            async checkHealth() {
+                // Check Rasa
+                await this.checkRasa();
+                
+                // Check MongoDB
+                await this.checkMongo();
+                
+                // Check Action Server
+                await this.checkActionServer();
+                
+                // Check Telegram
+                await this.checkTelegram();
+            }
+
+            async checkRasa() {
+                try {
+                    const response = await fetch(`${this.rasaUrl}/`);
+                    this.updateStatus('rasaStatus', response.ok, 'Çalışıyor');
+                } catch (error) {
+                    this.updateStatus('rasaStatus', false, 'Bağlantı yok');
+                }
+            }
+
+            async checkMongo() {
+                try {
+                    const response = await fetch(`${this.apiUrl}/health/mongo`);
+                    this.updateStatus('mongoStatus', response.ok, 'Bağlı');
+                } catch (error) {
+                    this.updateStatus('mongoStatus', false, 'Bağlantı yok');
+                }
+            }
+
+            async checkActionServer() {
+                try {
+                    const response = await fetch('http://localhost:5055/health');
+                    this.updateStatus('actionStatus', response.ok, 'Çalışıyor');
+                } catch (error) {
+                    this.updateStatus('actionStatus', false, 'Bağlantı yok');
+                }
+            }
+
+            async checkTelegram() {
+                try {
+                    const response = await fetch(`${this.apiUrl}/health/telegram`);
+                    this.updateStatus('telegramStatus', response.ok, 'Yapılandırıldı');
+                } catch (error) {
+                    this.updateStatus('telegramStatus', false, 'Yapılandırılmadı');
+                }
+            }
+
+            updateStatus(elementId, isHealthy, detail) {
+                const element = document.getElementById(elementId);
+                element.className = `status-item ${isHealthy ? 'healthy' : 'unhealthy'}`;
+                element.querySelector('.status-icon').textContent = isHealthy ? '✅' : '❌';
+                element.querySelector('.status-detail').textContent = detail;
+            }
+
+            async testSentence() {
+                const input = document.getElementById('testInput').value.trim();
+                if (!input) return;
+
+                const testBtn = document.getElementById('testBtn');
+                testBtn.disabled = true;
+                testBtn.textContent = 'Test ediliyor...';
+
+                const startTime = Date.now();
+
+                try {
+                    const response = await fetch(`${this.rasaUrl}/webhooks/rest/webhook`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            sender: 'test-user',
+                            message: input
+                        })
+                    });
+
+                    const endTime = Date.now();
+                    const responseTime = endTime - startTime;
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        this.displayResult(true, data, responseTime);
+                    } else {
+                        this.displayResult(false, null, responseTime);
+                    }
+                } catch (error) {
+                    this.displayResult(false, null, 0);
+                } finally {
+                    testBtn.disabled = false;
+                    testBtn.textContent = 'Test Et';
+                }
+            }
+
+            displayResult(success, data, responseTime) {
+                const resultEl = document.getElementById('testResult');
+                resultEl.className = `test-result ${success ? 'success' : 'error'}`;
+
+                if (success && data && data.length > 0) {
+                    const response = data[0];
+                    document.getElementById('responseBox').textContent = response.text || 'Yanıt alındı';
+                    document.getElementById('responseTime').textContent = responseTime;
+                    document.getElementById('confidence').textContent = 
+                        response.confidence ? (response.confidence * 100).toFixed(1) : '-';
+                    document.getElementById('intent').textContent = response.intent || '-';
+                } else {
+                    document.getElementById('responseBox').textContent = 'Yanıt alınamadı';
+                    document.getElementById('responseTime').textContent = responseTime || '-';
+                    document.getElementById('confidence').textContent = '-';
+                    document.getElementById('intent').textContent = '-';
+                }
+            }
+        }
+
+        // Initialize tester
+        document.addEventListener('DOMContentLoaded', () => {
+            new SystemTester();
+        });
+    </script>
+</body>
+</html>

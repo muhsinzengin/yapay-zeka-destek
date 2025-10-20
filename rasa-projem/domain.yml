@@ -1,0 +1,65 @@
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - affirm
+  - deny
+  - mood_great
+  - mood_unhappy
+  - bot_challenge
+
+slots:
+  admin_veri:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: custom
+  
+  duygu:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: custom
+  
+  user_id:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: custom
+
+entities:
+  - soru
+  - cevap
+
+responses:
+  utter_greet:
+    - text: "Merhaba! Size nasıl yardımcı olabilirim?"
+  
+  utter_cheer_up:
+    - text: "İşte sizi mutlu edecek bir şey:"
+      image: "https://i.imgur.com/nGF1K8f.jpg"
+  
+  utter_did_that_help:
+    - text: "Yardımcı olabildi mi?"
+  
+  utter_happy:
+    - text: "Harika! Mutlu olmanıza sevindim."
+  
+  utter_goodbye:
+    - text: "Hoşça kalın! İyi günler dilerim."
+  
+  utter_iamabot:
+    - text: "Ben yapay zeka destekli bir botum."
+
+actions:
+  - action_log_conversation
+  - action_analyze_sentiment
+  - action_notify_telegram
+  - action_fallback_gpt4
+  - action_admin_authenticate
+  - action_save_training_data
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Dashboard</title>
+    <link rel="stylesheet" href="admin-style.css">
+</head>
+<body>
+    <div class="admin-container">
+        <nav class="sidebar">
+            <div class="logo">
+                <span class="icon">🧠</span>
+                <h2>Admin Panel</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="dashboard.html" class="active">📊 Dashboard</a></li>
+                <li><a href="egitim.html">📚 Eğitim</a></li>
+                <li><a href="canli.html">💬 Canlı Sohbet</a></li>
+                <li><a href="ayarlar.html">⚙️ Ayarlar</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <header class="page-header">
+                <h1>Dashboard</h1>
+                <div class="user-info">
+                    <span>Admin</span>
+                    <button class="logout-btn">Çıkış</button>
+                </div>
+            </header>
+
+            <div class="dashboard-grid">
+                <!-- Today Stats -->
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <h3>Bugün</h3>
+                        <span class="icon">📅</span>
+                    </div>
+                    <div class="stat-value" id="todayConversations">-</div>
+                    <div class="stat-label">Toplam Konuşma</div>
+                    <div class="stat-subvalue">
+                        <span id="todayUsers">-</span> Benzersiz Kullanıcı
+                    </div>
+                </div>
+
+                <!-- Weekly Stats -->
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <h3>Bu Hafta</h3>
+                        <span class="icon">📈</span>
+                    </div>
+                    <div class="stat-value" id="weeklyConversations">-</div>
+                    <div class="stat-label">Toplam Konuşma</div>
+                    <div class="stat-subvalue">
+                        <span id="weeklyUsers">-</span> Benzersiz Kullanıcı
+                    </div>
+                </div>
+
+                <!-- Monthly Stats -->
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <h3>Bu Ay</h3>
+                        <span class="icon">📊</span>
+                    </div>
+                    <div class="stat-value" id="monthlyConversations">-</div>
+                    <div class="stat-label">Toplam Konuşma</div>
+                    <div class="stat-subvalue">
+                        <span id="monthlyUsers">-</span> Benzersiz Kullanıcı
+                    </div>
+                </div>
+
+                <!-- Yearly Stats -->
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <h3>Bu Yıl</h3>
+                        <span class="icon">🎯</span>
+                    </div>
+                    <div class="stat-value" id="yearlyConversations">-</div>
+                    <div class="stat-label">Toplam Konuşma</div>
+                    <div class="stat-subvalue">
+                        <span id="yearlyUsers">-</span> Benzersiz Kullanıcı
+                    </div>
+                </div>
+
+                <!-- GPT-4 Cost Stats -->
+                <div class="stat-card cost-card">
+                    <div class="stat-header">
+                        <h3>Yapay Zeka Maliyeti</h3>
+                        <span class="icon">💰</span>
+                    </div>
+                    <div class="cost-grid">
+                        <div class="cost-item">
+                            <div class="cost-period">Bugün</div>
+                            <div class="cost-value">$<span id="todayCost">0.00</span></div>
+                        </div>
+                        <div class="cost-item">
+                            <div class="cost-period">Bu Hafta</div>
+                            <div class="cost-value">$<span id="weeklyCost">0.00</span></div>
+                        </div>
+                        <div class="cost-item">
+                            <div class="cost-period">Bu Ay</div>
+                            <div class="cost-value">$<span id="monthlyCost">0.00</span></div>
+                        </div>
+                        <div class="cost-item">
+                            <div class="cost-period">Toplam</div>
+                            <div class="cost-value">$<span id="totalCost">0.00</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="activity-card">
+                    <h3>Son Aktiviteler</h3>
+                    <div class="activity-list" id="activityList">
+                        <div class="activity-item">
+                            <span class="activity-icon">👤</span>
+                            <div class="activity-content">
+                                <div class="activity-text">Yeni kullanıcı katıldı</div>
+                                <div class="activity-time">5 dakika önce</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>

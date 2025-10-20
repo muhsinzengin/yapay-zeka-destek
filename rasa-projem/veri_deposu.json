@@ -1,0 +1,61 @@
+{
+  "admin_data": {
+    "default_responses": {
+      "angry_customer": [
+        "Üzgünüm, sizin böyle hissetmenize neden olduğum için. Hemen bir müşteri temsilcisini size bağlıyorum.",
+        "Anlıyorum, bu durumun sizin için ne kadar sinir bozucu olduğunu anlıyorum. Size yardımcı olmak için elimden geleni yapacağım.",
+        "Haklısınız, bu durumun böyle olmaması gerekiyordu. Sorununuzu en kısa sürede çözmek için buradayım."
+      ],
+      "confused_customer": [
+        "Anlıyorum, konunun karışık olduğunu görüyorum. Size daha detaylı açıklayayım.",
+        "Sorunuzu daha iyi anlayabilmem için biraz daha detay verebilir misiniz?"
+      ],
+      "greeting": [
+        "Merhaba! Size nasıl yardımcı olabilirim?",
+        "İyi günler! Size hangi konuda destek olabilirim?"
+      ],
+      "goodbye": [
+        "Hoşça kalın! İyi günler dilerim.",
+        "Görüşmek üzere! Başka bir sorunuz olursa her zaman buradayım."
+      ]
+    },
+    "knowledge_base": [
+      {
+        "topic": "working_hours",
+        "question": "Çalışma saatleriniz nedir?",
+        "answer": "Haftanın 7 günü, 24 saat hizmetinizdeyiz."
+      },
+      {
+        "topic": "contact",
+        "question": "Nasıl iletişime geçebilirim?",
+        "answer": "Bize buradan mesaj atabilir veya e-posta gönderebilirsiniz."
+      }
+    ]
+  },
+  "sentiment_keywords": {
+    "anger": [
+      "kızgın",
+      "sinirli",
+      "öfkeli",
+      "berbat",
+      "rezalet",
+      "çok kötü"
+    ],
+    "happy": [
+      "mutlu",
+      "teşekkür",
+      "harika",
+      "mükemmel",
+      "süper"
+    ],
+    "sad": [
+      "üzgün",
+      "mutsuz",
+      "kötü hissediyorum"
+    ]
+  },
+  "auto_responses": {
+    "out_of_hours": "Şu an çalışma saatleri dışındayız. En kısa sürede size dönüş yapacağız.",
+    "high_priority": "Sorununuz yüksek öncelikli olarak işaretlendi. En kısa sürede size dönüş yapacağız."
+  }
+}
