@@ -1,0 +1,15 @@
+action_endpoint:
+  url: "http://localhost:5055/webhook"
+
+# Telegram channel configuration
+# Set TELEGRAM_ACCESS_TOKEN and TELEGRAM_VERIFY environment variables
+# telegram:
+#   access_token: "YOUR_TELEGRAM_BOT_TOKEN"
+#   verify: "YOUR_TELEGRAM_VERIFY_TOKEN"
+#   webhook_url: "https://your-domain.com/webhooks/telegram/webhook"
+
+# Webchat configuration
+socketio:
+  user_message_evt: user_uttered
+  bot_message_evt: bot_uttered
+  session_persistence: true

@@ -1,0 +1,8 @@
+# Automated Training - Run every night at 2 AM
+0 2 * * * cd /path/to/rasa-projem && /usr/bin/python3 automated_training.py >> /var/log/rasa_training.log 2>&1
+
+# Database Backup - Run every Sunday at 3 AM
+0 3 * * 0 cd /path/to/rasa-projem && /usr/bin/python3 database_backup.py >> /var/log/rasa_backup.log 2>&1
+
+# Log Cleanup - Run daily at 4 AM (handled by automated_training.py)
+# Already included in automated_training.py
